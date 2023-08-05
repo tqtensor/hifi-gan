@@ -351,11 +351,11 @@ def main():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--group_name", default=None)
-    parser.add_argument("--input_wavs_dir", default="LJSpeech-1.1/wavs")
+    parser.add_argument("--input_wavs_dir", default="BahnaricSpeech/wavs")
     parser.add_argument("--input_mels_dir", default="ft_dataset")
-    parser.add_argument("--input_training_file", default="LJSpeech-1.1/training.txt")
+    parser.add_argument("--input_training_file", default="BahnaricSpeech/training.txt")
     parser.add_argument(
-        "--input_validation_file", default="LJSpeech-1.1/validation.txt"
+        "--input_validation_file", default="BahnaricSpeech/validation.txt"
     )
     parser.add_argument("--checkpoint_path", default="cp_hifigan")
     parser.add_argument("--config", default="")
