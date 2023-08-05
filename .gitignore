@@ -1,0 +1,6 @@
+# audio files
+*.wav
+
+# compressed files
+*.tar.bz2
+*.zip

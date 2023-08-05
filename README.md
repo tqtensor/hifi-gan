@@ -1,5 +1,12 @@
 # HiFi-GAN: Generative Adversarial Networks for Efficient and High Fidelity Speech Synthesis
 
+## Bahnaric Vocoder
+This is a fork of the original HiFi-GAN repository, which is trained on Bahnaric data.
+The data was collected from YouTube channel of VTV5, link: https://www.youtube.com/@vtv5nhipsong, which consists of 300 hours of Bahnaric speech.
+
+The model (config_v1.json) was trained up to 3 million steps with 3 A100 GPUs, and the best checkpoint can be accessed here: https://drive.google.com/file/d/1-0Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z/view?usp=sharing
+
+
 ### Jungil Kong, Jaehyeon Kim, Jaekyoung Bae
 
 In our [paper](https://arxiv.org/abs/2010.05646), 
@@ -46,18 +53,18 @@ You can also use pretrained models we provide.<br/>
 [Download pretrained models](https://drive.google.com/drive/folders/1-eEYTB5Av9jNql0WGBlRoi-WH2J7bp5Y?usp=sharing)<br/> 
 Details of each folder are as in follows:
 
-|Folder Name|Generator|Dataset|Fine-Tuned|
-|------|---|---|---|
-|LJ_V1|V1|LJSpeech|No|
-|LJ_V2|V2|LJSpeech|No|
-|LJ_V3|V3|LJSpeech|No|
-|LJ_FT_T2_V1|V1|LJSpeech|Yes ([Tacotron2](https://github.com/NVIDIA/tacotron2))|
-|LJ_FT_T2_V2|V2|LJSpeech|Yes ([Tacotron2](https://github.com/NVIDIA/tacotron2))|
-|LJ_FT_T2_V3|V3|LJSpeech|Yes ([Tacotron2](https://github.com/NVIDIA/tacotron2))|
-|VCTK_V1|V1|VCTK|No|
-|VCTK_V2|V2|VCTK|No|
-|VCTK_V3|V3|VCTK|No|
-|UNIVERSAL_V1|V1|Universal|No|
+| Folder Name  | Generator | Dataset   | Fine-Tuned                                             |
+| ------------ | --------- | --------- | ------------------------------------------------------ |
+| LJ_V1        | V1        | LJSpeech  | No                                                     |
+| LJ_V2        | V2        | LJSpeech  | No                                                     |
+| LJ_V3        | V3        | LJSpeech  | No                                                     |
+| LJ_FT_T2_V1  | V1        | LJSpeech  | Yes ([Tacotron2](https://github.com/NVIDIA/tacotron2)) |
+| LJ_FT_T2_V2  | V2        | LJSpeech  | Yes ([Tacotron2](https://github.com/NVIDIA/tacotron2)) |
+| LJ_FT_T2_V3  | V3        | LJSpeech  | Yes ([Tacotron2](https://github.com/NVIDIA/tacotron2)) |
+| VCTK_V1      | V1        | VCTK      | No                                                     |
+| VCTK_V2      | V2        | VCTK      | No                                                     |
+| VCTK_V3      | V3        | VCTK      | No                                                     |
+| UNIVERSAL_V1 | V1        | Universal | No                                                     |
 
 We provide the universal model with discriminator weights that can be used as a base for transfer learning to other datasets.
 
