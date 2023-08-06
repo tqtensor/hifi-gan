@@ -11,5 +11,5 @@
 # pyc
 __pycache__
 
-# tensorboard
-*.tfevents.*
+# checkpoint
+cp_hifigan
