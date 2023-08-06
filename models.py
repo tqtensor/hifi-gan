@@ -92,6 +92,7 @@ class ResBlock1(torch.nn.Module):
             xt = F.leaky_relu(xt, LRELU_SLOPE)
             xt = c2(xt)
             x = xt + x
+
         return x
 
     def remove_weight_norm(self):
@@ -136,6 +137,7 @@ class ResBlock2(torch.nn.Module):
             xt = F.leaky_relu(x, LRELU_SLOPE)
             xt = c(xt)
             x = xt + x
+
         return x
 
     def remove_weight_norm(self):

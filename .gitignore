@@ -7,3 +7,9 @@
 
 # vscode
 .vscode
+
+# pyc
+__pycache__
+
+# tensorboard
+*.tfevents.*

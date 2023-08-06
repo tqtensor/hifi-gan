@@ -3,6 +3,7 @@ import os
 import random
 
 import numpy as np
+import scipy.signal
 import torch
 import torch.utils.data
 from librosa.filters import mel as librosa_mel_fn
@@ -12,9 +13,17 @@ from scipy.io.wavfile import read
 MAX_WAV_VALUE = 32768.0
 
 
-def load_wav(full_path):
+def load_wav(full_path, target_sampling_rate):
     sampling_rate, data = read(full_path)
-    return data, sampling_rate
+
+    if sampling_rate != target_sampling_rate:
+        resampled_data = scipy.signal.resample(
+            data, int(len(data) * target_sampling_rate / sampling_rate)
+        )
+    else:
+        resampled_data = data
+
+    return resampled_data
 
 
 def dynamic_range_compression(x, C=1, clip_val=1e-5):
@@ -35,11 +44,13 @@ def dynamic_range_decompression_torch(x, C=1):
 
 def spectral_normalize_torch(magnitudes):
     output = dynamic_range_compression_torch(magnitudes)
+
     return output
 
 
 def spectral_de_normalize_torch(magnitudes):
     output = dynamic_range_decompression_torch(magnitudes)
+
     return output
 
 
@@ -57,7 +68,9 @@ def mel_spectrogram(
 
     global mel_basis, hann_window
     if fmax not in mel_basis:
-        mel = librosa_mel_fn(sampling_rate, n_fft, num_mels, fmin, fmax)
+        mel = librosa_mel_fn(
+            sr=sampling_rate, n_fft=n_fft, n_mels=num_mels, fmin=fmin, fmax=fmax
+        )
         mel_basis[str(fmax) + "_" + str(y.device)] = (
             torch.from_numpy(mel).float().to(y.device)
         )
@@ -93,17 +106,18 @@ def mel_spectrogram(
 def get_dataset_filelist(a):
     with open(a.input_training_file, "r", encoding="utf-8") as fi:
         training_files = [
-            os.path.join(a.input_wavs_dir, x.split("|")[0] + ".wav")
-            for x in fi.read().split("\n")
-            if len(x) > 0
+            file_path
+            for file_path in fi.read().split("\n")
+            if file_path.endswith(".wav")
         ]
 
     with open(a.input_validation_file, "r", encoding="utf-8") as fi:
         validation_files = [
-            os.path.join(a.input_wavs_dir, x.split("|")[0] + ".wav")
-            for x in fi.read().split("\n")
-            if len(x) > 0
+            file_path
+            for file_path in fi.read().split("\n")
+            if file_path.endswith(".wav")
         ]
+
     return training_files, validation_files
 
 
@@ -151,17 +165,11 @@ class MelDataset(torch.utils.data.Dataset):
     def __getitem__(self, index):
         filename = self.audio_files[index]
         if self._cache_ref_count == 0:
-            audio, sampling_rate = load_wav(filename)
+            audio = load_wav(filename, self.sampling_rate)
             audio = audio / MAX_WAV_VALUE
             if not self.fine_tuning:
                 audio = normalize(audio) * 0.95
             self.cached_wav = audio
-            if sampling_rate != self.sampling_rate:
-                raise ValueError(
-                    "{} SR doesn't match target {} SR".format(
-                        sampling_rate, self.sampling_rate
-                    )
-                )
             self._cache_ref_count = self.n_cache_reuse
         else:
             audio = self.cached_wav
