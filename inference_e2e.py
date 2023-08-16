@@ -46,8 +46,8 @@ def inference(a):
     generator.eval()
     generator.remove_weight_norm()
     with torch.no_grad():
-        for i, filname in enumerate(filelist):
-            x = np.load(os.path.join(a.input_mels_dir, filname))
+        for i, filename in enumerate(filelist):
+            x = np.load(os.path.join(a.input_mels_dir, filename))
             x = torch.FloatTensor(x).to(device)
             y_g_hat = generator(x)
             audio = y_g_hat.squeeze()
@@ -55,7 +55,7 @@ def inference(a):
             audio = audio.cpu().numpy().astype("int16")
 
             output_file = os.path.join(
-                a.output_dir, os.path.splitext(filname)[0] + "_generated_e2e.wav"
+                a.output_dir, os.path.splitext(filename)[0] + "_generated_e2e.wav"
             )
             write(output_file, h.sampling_rate, audio)
             print(output_file)
