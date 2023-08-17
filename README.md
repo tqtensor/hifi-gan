@@ -4,7 +4,7 @@
 This is a fork of the original HiFi-GAN repository, which is trained on Bahnaric data.
 The data was collected from YouTube channel of VTV5, link: https://www.youtube.com/@vtv5nhipsong, which consists of 300 hours of Bahnaric speech.
 
-The model (config_v1.json) was trained up to 3 million steps with 3 A100 GPUs, and the best checkpoint can be accessed here: https://drive.google.com/file/d/1-0Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z/view?usp=sharing
+The model (config_v1.json) was trained up to 1 million steps with 2 A100 GPUs, and the best checkpoint can be accessed here: https://drive.google.com/drive/folders/1G8fjy9x2mgpMm3Qn7gNR_aoMxx_Ecj_y
 
 
 ### Jungil Kong, Jaehyeon Kim, Jaekyoung Bae
